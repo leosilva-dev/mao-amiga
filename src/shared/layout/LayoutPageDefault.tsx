@@ -1,7 +1,7 @@
 import React from "react";
 import { Wrap, WrapItem, Center } from "@chakra-ui/react";
 
-// import { Header } from "../components/header/Header";
+import { Header } from "../components/header/Header";
 
 interface ILayoutPageDefaultProps {
   children: React.ReactNode;
@@ -10,7 +10,7 @@ interface ILayoutPageDefaultProps {
 export const LayoutPageDefault = ({ children }: ILayoutPageDefaultProps) => {
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <Wrap
         marginRight={{ md: 100, sm: 30 }}
         marginLeft={{ md: 100, sm: 30 }}
