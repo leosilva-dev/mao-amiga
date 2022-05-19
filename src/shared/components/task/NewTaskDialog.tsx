@@ -14,9 +14,8 @@ import {
   InputRightElement,
   useDisclosure,
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
 import { useTask } from "../../hooks/useTask";
-import { FiCornerDownLeft } from "react-icons/fi";
+import { FiCornerDownLeft, FiPlus } from "react-icons/fi";
 
 export const NewTaskDialog: React.FC = () => {
   const [newTaskTitle, setNewTaskTitle] = useState("");
@@ -49,7 +48,7 @@ export const NewTaskDialog: React.FC = () => {
   return (
     <>
       <Button
-        leftIcon={<AddIcon />}
+        leftIcon={<Icon as={FiPlus} />}
         color="primary"
         variant="solid"
         onClick={onOpen}

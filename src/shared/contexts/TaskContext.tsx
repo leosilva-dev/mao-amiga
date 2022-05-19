@@ -18,6 +18,7 @@ interface ITaskContextData {
   startTask: (id: string) => void;
   AbandonTask: (id: string) => void;
   defineIsCounting: (value: boolean) => void;
+  startPomo: () => void;
 }
 export const TaskContext = createContext<ITaskContextData>(
   {} as ITaskContextData
@@ -144,6 +145,12 @@ export const TaskProvider: React.FC<ITaskProcider> = ({
     }
   };
 
+  const startPomo = () => {
+    setIsCounting(true);
+    setSecondsAmount(defaultTime);
+    console.log("start pomo");
+  };
+
   const AbandonTask = useCallback(
     (id: string) => {
       setIsCounting(false);
@@ -215,6 +222,7 @@ export const TaskProvider: React.FC<ITaskProcider> = ({
         startTask: startTask,
         AbandonTask: AbandonTask,
         defineIsCounting: defineIsCounting,
+        startPomo: startPomo,
       }}
     >
       {children}

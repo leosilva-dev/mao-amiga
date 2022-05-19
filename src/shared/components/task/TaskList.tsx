@@ -1,6 +1,13 @@
 import { useCallback } from "react";
 
-import { Divider, useColorMode, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  Divider,
+  HStack,
+  Icon,
+  useColorMode,
+  VStack,
+} from "@chakra-ui/react";
 import { Task } from "./Task";
 import {
   DragDropContext,
@@ -8,12 +15,14 @@ import {
   Droppable,
   DropResult,
 } from "react-beautiful-dnd";
+import { FiPlay } from "react-icons/fi";
+
 import { useTask } from "../../hooks/useTask";
 import { NewTaskDialog } from "./NewTaskDialog";
 
 const TaskList: React.FC = () => {
   const { colorMode } = useColorMode();
-  const { tasks, defineTasks } = useTask();
+  const { tasks, defineTasks, startPomo } = useTask();
 
   const onDragEnd = useCallback(
     (result: DropResult) => {
@@ -41,7 +50,17 @@ const TaskList: React.FC = () => {
 
   return (
     <VStack marginTop={2} spacing={2}>
-      <NewTaskDialog />
+      <HStack>
+        <Button
+          leftIcon={<Icon as={FiPlay} />}
+          color="primary"
+          variant="solid"
+          onClick={startPomo}
+        >
+          Start Pomo
+        </Button>
+        <NewTaskDialog />
+      </HStack>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId={`${"tasks"}`}>
           {(provided) => (

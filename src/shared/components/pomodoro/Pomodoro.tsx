@@ -41,11 +41,11 @@ export const Pomodoro: React.FC = () => {
           size="400px"
           color="primary"
           value={percentage()}
-          thickness={currentTask.isRunning ? "1px" : "0px"}
+          thickness={isCounting ? "1px" : "0px"}
           trackColor={colorMode === "light" ? "gray.200" : "gray.700"}
         >
           <CircularProgressLabel>
-            {currentTask.isRunning ? (
+            {isCounting ? (
               `${minutes.toString().padStart(2, "0")}:${seconds
                 .toString()
                 .padStart(2, "0")}`
@@ -60,7 +60,7 @@ export const Pomodoro: React.FC = () => {
           </CircularProgressLabel>
         </CircularProgress>
       </Box>
-      {currentTask.isRunning ? (
+      {isCounting ? (
         <HStack>
           {isCounting ? (
             <Tooltip
