@@ -2,15 +2,17 @@ import React from "react";
 import { Wrap, WrapItem, Center } from "@chakra-ui/react";
 
 import { Header } from "../components/header/Header";
+import { useAuthenticationStatus } from "@nhost/react";
 
 interface ILayoutPageDefaultProps {
   children: React.ReactNode;
 }
 
 export const LayoutPageDefault = ({ children }: ILayoutPageDefaultProps) => {
+  const { isAuthenticated } = useAuthenticationStatus();
   return (
     <>
-      <Header />
+      {isAuthenticated && <Header />}
       <Wrap
         marginRight={{ md: 100, sm: 30 }}
         marginLeft={{ md: 100, sm: 30 }}
