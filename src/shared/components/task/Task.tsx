@@ -3,34 +3,19 @@ import {
   Box,
   Checkbox,
   HStack,
-  Icon,
   IconButton,
-  Button,
   Tooltip,
   Text,
 } from "@chakra-ui/react";
-import {
-  CheckIcon,
-  DeleteIcon,
-  DragHandleIcon,
-  TimeIcon,
-} from "@chakra-ui/icons";
-import { FiPlay } from "react-icons/fi";
+import { CheckIcon, DeleteIcon, DragHandleIcon } from "@chakra-ui/icons";
 
 import { ITask } from "../../service/api/task/Task";
 import { useTask } from "../../hooks/useTask";
 import { EditTaskDialog } from "./EditTaskDialog";
 
-export const Task: React.FC<ITask> = ({
-  done,
-  id,
-  isRunning,
-  order,
-  title,
-}) => {
+export const Task: React.FC<ITask> = ({ done, id, order, title }) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-  const { handleDeleteTask, handleCheckTask, startTask, isCounting } =
-    useTask();
+  const { handleDeleteTask, handleCheckTask } = useTask();
 
   return (
     <HStack padding={2}>
@@ -43,23 +28,7 @@ export const Task: React.FC<ITask> = ({
         isChecked={done}
         onChange={() => handleCheckTask(id)}
       />
-      <Tooltip
-        hasArrow
-        label={"Start task"}
-        placement="top"
-        bg="gray.300"
-        color="black"
-      >
-        <IconButton
-          disabled={isRunning || done}
-          fontSize="18px"
-          colorScheme="telegram"
-          aria-label={"play"}
-          onClick={() => startTask(id)}
-          icon={<Icon as={FiPlay} />}
-          variant="ghost"
-        />
-      </Tooltip>
+
       {done ? (
         <Text isTruncated width="80" fontSize="md" as="del">
           {title}
@@ -90,14 +59,6 @@ export const Task: React.FC<ITask> = ({
             variant="ghost"
           />
         </Tooltip>
-      ) : isRunning ? (
-        <Button
-          isLoading
-          colorScheme="#26C485"
-          variant="link"
-          spinnerPlacement="start"
-          spinner={isCounting ? <TimeIcon /> : <CheckIcon />}
-        />
       ) : (
         <Tooltip
           hasArrow
@@ -107,7 +68,6 @@ export const Task: React.FC<ITask> = ({
           color="black"
         >
           <IconButton
-            disabled={isRunning}
             fontSize="18px"
             colorScheme="#26C485"
             aria-label={"delete task"}

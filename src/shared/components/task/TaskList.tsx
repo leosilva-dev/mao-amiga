@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 
 import {
+  Box,
   Button,
   Divider,
   HStack,
@@ -15,14 +16,14 @@ import {
   Droppable,
   DropResult,
 } from "react-beautiful-dnd";
-import { FiPlay } from "react-icons/fi";
 
 import { useTask } from "../../hooks/useTask";
 import { NewTaskDialog } from "./NewTaskDialog";
+import { AllDoneMessage } from "../all-done-message/AllDoneMessage";
 
 const TaskList: React.FC = () => {
   const { colorMode } = useColorMode();
-  const { tasks, defineTasks, startPomo } = useTask();
+  const { tasks, defineTasks } = useTask();
 
   const onDragEnd = useCallback(
     (result: DropResult) => {
@@ -50,114 +51,109 @@ const TaskList: React.FC = () => {
 
   return (
     <VStack marginTop={2} spacing={2}>
+      {tasks.length === 0 && <AllDoneMessage />}
       <HStack>
-        <Button
-          leftIcon={<Icon as={FiPlay} />}
-          color="primary"
-          variant="solid"
-          onClick={startPomo}
-        >
-          Start Pomo
-        </Button>
         <NewTaskDialog />
       </HStack>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId={`${"tasks"}`}>
-          {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              {tasks
-                ?.filter((tasks) => tasks.done === false)
-                .map((task, index) => {
-                  return (
-                    <Draggable
-                      key={task.id}
-                      draggableId={`${task.id}`}
-                      index={index}
-                    >
-                      {(provided, { isDragging }) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          style={{
-                            ...provided.draggableProps.style,
-                            background: isDragging
-                              ? colorMode === "light"
-                                ? "#FDFFFC"
-                                : "#2D3748"
-                              : "transparent",
-                            borderRadius: 5,
-                            paddingRight: isDragging ? 3 : 0,
-                            paddingTop: isDragging ? 1.5 : 0,
-                          }}
+      {tasks?.length > 0 && (
+        <>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId={`${"tasks"}`}>
+              {(provided) => (
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  {tasks
+                    ?.filter((tasks) => tasks.done === false)
+                    .map((task, index) => {
+                      return (
+                        <Draggable
+                          key={task.id}
+                          draggableId={`${task.id}`}
+                          index={index}
                         >
-                          <Task
-                            key={task.id}
-                            id={task.id}
-                            order={task.order}
-                            title={task.title}
-                            done={task.done}
-                            isRunning={task.isRunning}
-                          />
-                        </div>
-                      )}
-                    </Draggable>
-                  );
-                })}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-      {showDivider() ? <Divider /> : null}
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId={`${"tasks_finished"}`}>
-          {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              {tasks
-                ?.filter((tasks) => tasks.done === true)
-                .map((task, index) => {
-                  return (
-                    <Draggable
-                      key={task.id}
-                      draggableId={`${task.id}`}
-                      index={index}
-                    >
-                      {(provided, { isDragging }) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          style={{
-                            ...provided.draggableProps.style,
-                            background: isDragging
-                              ? colorMode === "light"
-                                ? "#FDFFFC"
-                                : "#2D3748"
-                              : "transparent",
-                            borderRadius: 5,
-                            paddingRight: isDragging ? 3 : 0,
-                            paddingTop: isDragging ? 1.5 : 0,
-                          }}
+                          {(provided, { isDragging }) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              style={{
+                                ...provided.draggableProps.style,
+                                background: isDragging
+                                  ? colorMode === "light"
+                                    ? "#FDFFFC"
+                                    : "#2D3748"
+                                  : "transparent",
+                                borderRadius: 5,
+                                paddingRight: isDragging ? 3 : 0,
+                                paddingTop: isDragging ? 1.5 : 0,
+                              }}
+                            >
+                              <Task
+                                key={task.id}
+                                id={task.id}
+                                order={task.order}
+                                title={task.title}
+                                done={task.done}
+                              />
+                            </div>
+                          )}
+                        </Draggable>
+                      );
+                    })}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+          {showDivider() ? <Divider /> : null}
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId={`${"tasks_finished"}`}>
+              {(provided) => (
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  {tasks
+                    ?.filter((tasks) => tasks.done === true)
+                    .map((task, index) => {
+                      return (
+                        <Draggable
+                          key={task.id}
+                          draggableId={`${task.id}`}
+                          index={index}
                         >
-                          <Task
-                            key={task.id}
-                            id={task.id}
-                            order={task.order}
-                            title={task.title}
-                            done={task.done}
-                            isRunning={task.isRunning}
-                          />
-                        </div>
-                      )}
-                    </Draggable>
-                  );
-                })}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+                          {(provided, { isDragging }) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              style={{
+                                ...provided.draggableProps.style,
+                                background: isDragging
+                                  ? colorMode === "light"
+                                    ? "#FDFFFC"
+                                    : "#2D3748"
+                                  : "transparent",
+                                borderRadius: 5,
+                                paddingRight: isDragging ? 3 : 0,
+                                paddingTop: isDragging ? 1.5 : 0,
+                              }}
+                            >
+                              <Task
+                                key={task.id}
+                                id={task.id}
+                                order={task.order}
+                                title={task.title}
+                                done={task.done}
+                              />
+                            </div>
+                          )}
+                        </Draggable>
+                      );
+                    })}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </>
+      )}
     </VStack>
   );
 };
