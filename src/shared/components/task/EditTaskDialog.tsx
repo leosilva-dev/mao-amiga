@@ -7,12 +7,14 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
+  Box,
   Button,
   Icon,
   IconButton,
   Input,
   InputGroup,
   InputRightElement,
+  Text,
   Tooltip,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -87,9 +89,14 @@ export const EditTaskDialog: React.FC<IEditTaskDialogProps> = ({
         <AlertDialogOverlay />
 
         <AlertDialogContent>
-          <AlertDialogHeader>Edit task: {title}</AlertDialogHeader>
+          <AlertDialogHeader>Edit task</AlertDialogHeader>
           <AlertDialogCloseButton />
           <AlertDialogBody onKeyDown={handleKeyboardEvent}>
+            {/* <Box paddingBottom={5}>
+              <Text isTruncated fontSize="lg">
+                Título: {title}
+              </Text>
+            </Box> */}
             <InputGroup>
               <InputRightElement
                 pointerEvents="none"
@@ -99,7 +106,6 @@ export const EditTaskDialog: React.FC<IEditTaskDialogProps> = ({
               <Input
                 ref={inputFocus}
                 isTruncated
-                // width="80"
                 value={taskTitle}
                 onChange={(e) => ChangeTitle(e.target.value)}
               />

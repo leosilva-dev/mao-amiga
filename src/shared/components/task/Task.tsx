@@ -19,15 +19,20 @@ export const Task: React.FC<ITask> = ({ done, id, order, title }) => {
 
   return (
     <HStack padding={2}>
-      <Box cursor={"grabbing"}>
+      <Box
+        cursor={"grabbing"}
+        display="flex"
+        justifyContent={"center"}
+        alignItems="center"
+      >
         <DragHandleIcon />
+        <Checkbox
+          marginLeft={2}
+          size={"lg"}
+          isChecked={done}
+          onChange={() => handleCheckTask(id)}
+        />
       </Box>
-
-      <Checkbox
-        size={"lg"}
-        isChecked={done}
-        onChange={() => handleCheckTask(id)}
-      />
 
       {done ? (
         <Text isTruncated width="80" fontSize="md" as="del">

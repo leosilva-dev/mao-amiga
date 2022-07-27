@@ -1,14 +1,6 @@
 import { useCallback } from "react";
 
-import {
-  Box,
-  Button,
-  Divider,
-  HStack,
-  Icon,
-  useColorMode,
-  VStack,
-} from "@chakra-ui/react";
+import { Divider, HStack, useColorMode, VStack } from "@chakra-ui/react";
 import { Task } from "./Task";
 import {
   DragDropContext,
