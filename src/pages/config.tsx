@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { ToggleMode } from "../shared/components/toggleMode/ToggleMode";
 import { usePomo } from "../shared/hooks/usePomo";
+import withAuth from "../shared/components/with-auth/WithAuth";
 
 export const Config: React.FC = () => {
   const { defaultTime, defineDefaultTime } = usePomo();
@@ -68,4 +69,4 @@ export const Config: React.FC = () => {
   );
 };
 
-export default Config;
+export default withAuth(Config);
