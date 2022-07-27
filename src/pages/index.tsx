@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Pomodoro } from "../shared/components/pomodoro/Pomodoro";
 
 import dynamic from "next/dynamic";
+import withAuth from "../shared/components/with-auth/WithAuth";
 
 const DynamicComponent = dynamic(
   () => import("../shared/components/task/TaskList"),
@@ -22,4 +23,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default withAuth(Home);
