@@ -18,7 +18,6 @@ const Home: NextPage = () => {
   return (
     <HStack>
       <DynamicComponent />
-      <Pomodoro />
     </HStack>
   );
 };
