@@ -7,6 +7,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
+  Box,
   Button,
   Icon,
   Input,
@@ -47,14 +48,16 @@ export const NewTaskDialog: React.FC = () => {
 
   return (
     <>
-      <Button
-        leftIcon={<Icon as={FiPlus} />}
-        color="primary"
-        variant="solid"
-        onClick={onOpen}
-      >
-        New task
-      </Button>
+      <Box paddingY={5}>
+        <Button
+          leftIcon={<Icon as={FiPlus} />}
+          color="primary"
+          variant="solid"
+          onClick={onOpen}
+        >
+          New task
+        </Button>
+      </Box>
 
       <AlertDialog
         motionPreset="slideInBottom"
