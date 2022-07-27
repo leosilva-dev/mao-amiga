@@ -14,13 +14,13 @@ export const TaskContext = createContext<ITaskContextData>(
   {} as ITaskContextData
 );
 
-interface ITaskProcider {
+interface ITaskProvider {
   children: React.ReactNode;
 }
 
-export const TaskProvider: React.FC<ITaskProcider> = ({
+export const TaskProvider: React.FC<ITaskProvider> = ({
   children,
-}: ITaskProcider) => {
+}: ITaskProvider) => {
   const [tasks, setTasks] = useState<ITask[]>([]);
 
   const handleCreateTask = useCallback(
