@@ -1,30 +1,18 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
-import { ITask, taskService } from "../service/api/task/Task";
+import { ITask } from "../service/api/task/Task";
 import { Feedback } from "../util/Feedback";
 
 interface ITaskContextData {
-  secondsAmount: number;
-  defaultTime: number;
-  defineDefaultTime: (value: number) => void;
-  decreaseSecondsAmount: () => void;
-  isCounting: boolean;
-  tasks: ITask[] | undefined;
-  currentTask: ITask;
+  tasks: ITask[];
   defineTasks: (tasks: ITask[]) => void;
   handleCreateTask: (title: string) => void;
   handleDeleteTask: (id: string) => void;
   handleCheckTask: (id: string) => void;
   handleChangeTitle: (id: string, value: string) => void;
-  startTask: (id: string) => void;
-  AbandonTask: (id: string) => void;
-  defineIsCounting: (value: boolean) => void;
-  startPomo: () => void;
 }
 export const TaskContext = createContext<ITaskContextData>(
   {} as ITaskContextData
 );
-
-// const TOTAL_SECONDS_AMOUNT = 15 * 60 - 895;
 
 interface ITaskProcider {
   children: React.ReactNode;
@@ -34,36 +22,6 @@ export const TaskProvider: React.FC<ITaskProcider> = ({
   children,
 }: ITaskProcider) => {
   const [tasks, setTasks] = useState<ITask[]>([]);
-  const [currentTask, setCurrentTask] = useState<ITask>({
-    done: false,
-    id: "",
-    title: "",
-    isRunning: false,
-    order: 0,
-  });
-
-  const [defaultTime, setDefaultTime] = useState(15 * 60);
-  const [secondsAmount, setSecondsAmount] = useState(defaultTime);
-  const [isCounting, setIsCounting] = useState(false);
-
-  useEffect(() => {
-    const tasksDB = taskService.getAll();
-    if (tasksDB != null) {
-      setTasks(tasksDB);
-    }
-  }, [setTasks]);
-
-  const decreaseSecondsAmount = () => {
-    setSecondsAmount((old) => old - 1);
-  };
-
-  const defineIsCounting = useCallback((value: boolean) => {
-    setIsCounting(value);
-  }, []);
-
-  const defineDefaultTime = (value: number) => {
-    setDefaultTime(value);
-  };
 
   const handleCreateTask = useCallback(
     (title: string) => {
@@ -72,7 +30,6 @@ export const TaskProvider: React.FC<ITaskProcider> = ({
         order: tasks.length + 1,
         title: title,
         done: false,
-        isRunning: false,
       };
 
       const allTasks = [...tasks, newTask];
@@ -109,58 +66,9 @@ export const TaskProvider: React.FC<ITaskProcider> = ({
     [tasks]
   );
 
-  const handleChangeRunning = useCallback(
-    (id: string, newState: boolean) => {
-      const taskChecked = tasks.find((task) => task.id === id);
-      const result = tasks.filter((task) => task.id !== id);
-      result.forEach((task) => (task.isRunning = false));
-      if (taskChecked !== undefined) {
-        taskChecked.isRunning = newState;
-        const allTasks = [...result, taskChecked];
-        allTasks.sort((a, b) => {
-          return a.order - b.order;
-        });
-
-        setTasks([...allTasks]);
-      }
-    },
-    [tasks]
-  );
-
   const defineTasks = (tasks: ITask[]) => {
     setTasks([...tasks]);
   };
-
-  const startTask = (id: string) => {
-    setIsCounting(true);
-    setSecondsAmount(defaultTime);
-    const startedTask = tasks.find((task) => task.id === id);
-    if (startedTask !== undefined) {
-      setCurrentTask(startedTask);
-
-      handleChangeRunning(id, true);
-      if (startedTask.done) {
-        handleCheckTask(startedTask.id);
-      }
-    }
-  };
-
-  const startPomo = () => {
-    setIsCounting(true);
-    setSecondsAmount(defaultTime);
-    console.log("start pomo");
-  };
-
-  const AbandonTask = useCallback(
-    (id: string) => {
-      setIsCounting(false);
-      const pausedTask = tasks.find((task) => task.id === id);
-      if (pausedTask !== undefined) {
-        handleChangeRunning(id, false);
-      }
-    },
-    [handleChangeRunning, tasks]
-  );
 
   const handleCheckTask = useCallback(
     (id: string) => {
@@ -172,57 +80,22 @@ export const TaskProvider: React.FC<ITaskProcider> = ({
         allTasks.sort((a, b) => {
           return a.order - b.order;
         });
-        if (taskChecked.done) {
-          AbandonTask(taskChecked.id);
-        }
+
         setTasks([...allTasks]);
       }
     },
-    [tasks, AbandonTask]
+    [tasks]
   );
-
-  // const pomoCounting = useCallback(() => {
-  //   if (secondsAmount > 0) {
-  //     decreaseSecondsAmount();
-  //   }
-  // }, [secondsAmount]);
-
-  // const startPomoClock = setTimeout(pomoCounting, 1000);
-  // const stopPomoClock = useCallback(() => {
-  //   clearTimeout(startPomoClock);
-  // }, [startPomoClock]);
-
-  useEffect(() => {
-    if (secondsAmount > 0 && isCounting) {
-      setTimeout(() => {
-        if (secondsAmount > 0) {
-          decreaseSecondsAmount();
-        }
-      }, 1000);
-    } else {
-      defineIsCounting(false);
-    }
-  }, [defineIsCounting, isCounting, secondsAmount]);
 
   return (
     <TaskContext.Provider
       value={{
-        secondsAmount: secondsAmount,
-        defaultTime: defaultTime,
-        defineDefaultTime: defineDefaultTime,
-        isCounting: isCounting,
-        decreaseSecondsAmount: decreaseSecondsAmount,
         tasks: tasks,
-        currentTask: currentTask,
         defineTasks: defineTasks,
         handleCreateTask: handleCreateTask,
         handleDeleteTask: handleDeleteTask,
         handleCheckTask: handleCheckTask,
         handleChangeTitle: handleChangeTitle,
-        startTask: startTask,
-        AbandonTask: AbandonTask,
-        defineIsCounting: defineIsCounting,
-        startPomo: startPomo,
       }}
     >
       {children}

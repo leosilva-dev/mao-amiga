@@ -1,5 +1,5 @@
-import { VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import { HStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { Pomodoro } from "../shared/components/pomodoro/Pomodoro";
 
@@ -16,10 +16,10 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <VStack>
-      <Pomodoro />
+    <HStack>
       <DynamicComponent />
-    </VStack>
+      <Pomodoro />
+    </HStack>
   );
 };
 
