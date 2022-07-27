@@ -20,30 +20,42 @@ export const Pomodoro: React.FC = () => {
   const seconds = secondsAmount % 60;
 
   const percentage = () => {
+    if (!isCounting) {
+      return 0;
+    }
     return (100 * (defaultTime - secondsAmount)) / defaultTime;
+  };
+
+  const getClockLabel = (): string => {
+    if (!isCounting) {
+      return "00:00";
+    } else {
+      return `${minutes.toString().padStart(2, "0")}:${seconds
+        .toString()
+        .padStart(2, "0")}`;
+    }
   };
 
   return (
     <VStack>
-      {isCounting && (
-        <>
-          <Box>
-            <CircularProgress
-              capIsRound
-              size="400px"
-              color="primary"
-              value={percentage()}
-              thickness={isCounting ? "1px" : "0px"}
-              trackColor={colorMode === "light" ? "gray.200" : "gray.700"}
-            >
-              <CircularProgressLabel>
-                {isCounting &&
-                  `${minutes.toString().padStart(2, "0")}:${seconds
-                    .toString()
-                    .padStart(2, "0")}`}
-              </CircularProgressLabel>
-            </CircularProgress>
-          </Box>
+      <Box>
+        <CircularProgress
+          capIsRound
+          size="300px"
+          color="primary"
+          value={percentage()}
+          thickness={"1px"}
+          trackColor={colorMode === "light" ? "gray.200" : "gray.700"}
+        >
+          <CircularProgressLabel
+            color={isCounting ? "whiteAlpha.900" : "gray.700"}
+          >
+            {getClockLabel()}
+          </CircularProgressLabel>
+        </CircularProgress>
+      </Box>
+      <Box paddingBottom={5}>
+        {isCounting && (
           <Button
             leftIcon={<Icon as={FiStopCircle} />}
             color="primary"
@@ -52,18 +64,18 @@ export const Pomodoro: React.FC = () => {
           >
             Stop Pomo
           </Button>
-        </>
-      )}
-      {!isCounting && (
-        <Button
-          leftIcon={<Icon as={FiPlay} />}
-          color="primary"
-          variant="solid"
-          onClick={startPomo}
-        >
-          Start Pomo
-        </Button>
-      )}
+        )}
+        {!isCounting && (
+          <Button
+            leftIcon={<Icon as={FiPlay} />}
+            color="primary"
+            variant="solid"
+            onClick={startPomo}
+          >
+            Start Pomo
+          </Button>
+        )}
+      </Box>
     </VStack>
   );
 };
