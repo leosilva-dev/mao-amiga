@@ -16,10 +16,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ToggleMode } from "../shared/components/toggleMode/ToggleMode";
-import { useTask } from "../shared/hooks/useTask";
+import { usePomo } from "../shared/hooks/usePomo";
 
 export const Config: React.FC = () => {
-  const { defaultTime, defineDefaultTime } = useTask();
+  const { defaultTime, defineDefaultTime } = usePomo();
   const [timeDefault, setTimeDefault] = useState(defaultTime);
 
   useEffect(() => {
