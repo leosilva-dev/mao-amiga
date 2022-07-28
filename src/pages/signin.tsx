@@ -49,19 +49,12 @@ const SignIn: React.FC = () => {
     return true;
   };
 
-  const goToProfile = () => {
-    // navigate("/profile");
-  };
-
   const handleSignIn = async () => {
     await signInEmailPassword(email, password);
-
-    // console.log("isSuccess", isSuccess);
-    // console.log("needsEmailVerification", needsEmailVerification);
   };
 
   if (isSuccess) {
-    router.push("/");
+    router.push(process.env.APP_URL || "https://pomotask-next.vercel.app/");
     return null;
   }
 
