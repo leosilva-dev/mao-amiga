@@ -57,7 +57,7 @@ const SignUp: React.FC = () => {
   };
 
   if (isSuccess) {
-    router.push(process.env.APP_URL || "https://pomotask-next.vercel.app/");
+    router.push("/");
     return null;
   }
 
