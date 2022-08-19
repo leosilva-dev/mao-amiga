@@ -1,27 +1,60 @@
 import type { NextPage } from "next";
-import { HStack } from "@chakra-ui/react";
+import {
+  Heading,
+  HStack,
+  Skeleton,
+  Stack,
+  Highlight,
+  VStack,
+  Box,
+} from "@chakra-ui/react";
+
 import { useEffect, useState } from "react";
 import { IOng, ongService } from "../shared/service/api/ong/Ong";
+import { OngCard } from "../shared/components/ong-card/OngCard";
 
 const Home: NextPage = () => {
   const [ongs, setOngs] = useState<IOng[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     ongService.getAllOngs().then((ongs) => {
       if (ongs) {
         setOngs(ongs);
       }
-      setLoading(false);
+      setIsLoading(false);
     });
   }, []);
 
   return (
-    <HStack>
+    <Box marginBottom={5} width="full" height="full">
+      {isLoading && (
+        <Stack>
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+        </Stack>
+      )}
+      {!isLoading && (
+        <Heading lineHeight="tall">
+          <Highlight
+            query={["precisa", "ajuda"]}
+            styles={{ px: "2", py: "1", rounded: "full", bg: "red.100" }}
+          >
+            Encontre alguém que precisa da sua ajuda.
+          </Highlight>
+        </Heading>
+      )}
+
       {ongs.map((ong) => (
-        <div key={ong.id}>{ong.nome}</div>
+        <OngCard
+          key={ong.id}
+          id={ong.id}
+          nome={ong.nome}
+          descricao={ong.descricao}
+        />
       ))}
-    </HStack>
+    </Box>
   );
 };
 
