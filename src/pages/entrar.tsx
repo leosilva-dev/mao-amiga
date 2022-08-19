@@ -10,12 +10,12 @@ import {
   Heading,
   useColorMode,
 } from "@chakra-ui/react";
-import { useSignUpEmailPassword } from "@nhost/react";
+import { useSignInEmailPassword } from "@nhost/react";
 
 import { Feedback } from "../shared/util/Feedback";
 import { useRouter } from "next/router";
 
-const SignUp: React.FC = () => {
+const Entrar: React.FC = () => {
   const { colorMode } = useColorMode();
 
   const [name, setName] = useState("");
@@ -23,15 +23,14 @@ const SignUp: React.FC = () => {
   const [password, setPassword] = useState("");
 
   const router = useRouter();
-
   const {
-    signUpEmailPassword,
+    signInEmailPassword,
     isLoading,
     isSuccess,
     needsEmailVerification,
     isError,
     error,
-  } = useSignUpEmailPassword();
+  } = useSignInEmailPassword();
 
   const valide = () => {
     if (password.length < 3) {
@@ -50,10 +49,8 @@ const SignUp: React.FC = () => {
     return true;
   };
 
-  const handleSignUp = async () => {
-    await signUpEmailPassword(email, password, {
-      displayName: name,
-    });
+  const handleSignIn = async () => {
+    await signInEmailPassword(email, password);
   };
 
   if (isSuccess) {
@@ -78,16 +75,6 @@ const SignUp: React.FC = () => {
               p={8}
             >
               <Stack spacing={4}>
-                <FormControl id="name">
-                  <FormLabel>Nome</FormLabel>
-                  <Input
-                    width={400}
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    type="text"
-                  />
-                </FormControl>
-
                 <FormControl id="email">
                   <FormLabel>Email</FormLabel>
                   <Input
@@ -112,17 +99,17 @@ const SignUp: React.FC = () => {
                       _hover={{
                         bg: "blue.500",
                       }}
-                      onClick={() => handleSignUp()}
+                      onClick={() => handleSignIn()}
                     >
-                      Cadastrar
+                      Entrar
                     </Button>
                     <Button
                       variant={"link"}
                       bg={colorMode === "light" ? "whiteAlpha.100" : "gray.700"}
                       color={"blue.500"}
-                      onClick={() => router.push("/signin")}
+                      onClick={() => router.push("/cadastrar")}
                     >
-                      Já possui conta? Entrar
+                      Ainda não possui uma conta? Cadastrar
                     </Button>
                   </Stack>
                 </Stack>
@@ -135,4 +122,4 @@ const SignUp: React.FC = () => {
   );
 };
 
-export default SignUp;
+export default Entrar;

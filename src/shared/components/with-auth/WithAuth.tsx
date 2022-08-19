@@ -13,7 +13,7 @@ export default function withAuth(Component: React.FC) {
     }
 
     if (!isAuthenticated) {
-      router.push("/signin");
+      router.push("/entrar");
       return null;
     }
 

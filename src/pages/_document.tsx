@@ -1,18 +1,11 @@
-import Document, {
-  Html,
-  Main,
-  Head,
-  NextScript,
-  DocumentContext,
-} from "next/document";
-import { resetServerContext } from "react-beautiful-dnd";
+import Document, { Html, Main, Head, NextScript } from "next/document";
 
 class MyDocument extends Document {
   render() {
     return (
       <Html>
         <Head>
-          <title>PomoTask</title>
+          <title>Mão Amiga</title>
         </Head>
         <body>
           <Main />

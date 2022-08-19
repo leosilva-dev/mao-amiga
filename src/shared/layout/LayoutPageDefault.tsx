@@ -12,7 +12,8 @@ export const LayoutPageDefault = ({ children }: ILayoutPageDefaultProps) => {
   const { isAuthenticated } = useAuthenticationStatus();
   return (
     <>
-      {isAuthenticated && <Header />}
+      {/* {isAuthenticated && <Header />} */}
+      <Header />
       <Wrap
         marginRight={{ md: 100, sm: 30 }}
         marginLeft={{ md: 100, sm: 30 }}

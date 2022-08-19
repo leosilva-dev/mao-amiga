@@ -4,16 +4,20 @@ import {
   Flex,
   HStack,
   useColorModeValue,
-  IconButton,
   Icon,
+  Button,
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { FiCheckCircle, FiSettings, FiUser } from "react-icons/fi";
-import { useUserData } from "@nhost/react";
+import { useRouter } from "next/router";
+import { BiDonateHeart } from "react-icons/bi";
+import { useAuthenticationStatus, useUserData } from "@nhost/react";
+import { ToggleMode } from "../toggleMode/ToggleMode";
 
 export const Header = () => {
+  const { isAuthenticated } = useAuthenticationStatus();
   const user = useUserData();
+  const router = useRouter();
 
   return (
     <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -25,33 +29,50 @@ export const Header = () => {
               fontSize={18}
               fontFamily={"Helvetica"}
               cursor={"pointer"}
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
             >
-              <Icon as={FiCheckCircle} /> PomoTask
+              <Icon as={BiDonateHeart} fontSize={22} />
+              <Text marginLeft={2}>Mão amiga</Text>
             </Box>
           </Link>
         </HStack>
         <Flex alignItems={"center"}>
-          <Link href="/profile" passHref>
-            <Box display={"flex"} alignItems={"center"} cursor={"pointer"}>
-              <Text>{user?.displayName}</Text>
-              <IconButton
-                aria-label="Config"
-                fontSize="18px"
-                colorScheme="#26C485"
-                icon={<Icon as={FiUser} />}
-                variant="ghost"
-              />
-            </Box>
-          </Link>
-          <Link href="/config" passHref>
-            <IconButton
-              aria-label="Config"
-              fontSize="18px"
-              colorScheme="#26C485"
-              icon={<Icon as={FiSettings} />}
-              variant="ghost"
-            />
-          </Link>
+          {isAuthenticated && (
+            <Button
+              bg={"transparent"}
+              color={"blue.400"}
+              variant={"unstyled"}
+              onClick={() => router.push("/profile")}
+            >
+              {user?.displayName}
+            </Button>
+          )}
+          {!isAuthenticated && (
+            <HStack>
+              <Button
+                bg={"blue.400"}
+                color={"white"}
+                _hover={{
+                  bg: "blue.500",
+                }}
+                variant="solid"
+                onClick={() => router.push("/entrar")}
+              >
+                Entrar como ONG
+              </Button>
+              <Button
+                bg={"transparent"}
+                color={"blue.400"}
+                variant={"link"}
+                onClick={() => router.push("/cadastrar")}
+              >
+                Cadastre sua ONG
+              </Button>
+            </HStack>
+          )}
+          <ToggleMode />
         </Flex>
       </Flex>
     </Box>

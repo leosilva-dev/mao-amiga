@@ -1,26 +1,28 @@
 import type { NextPage } from "next";
 import { HStack } from "@chakra-ui/react";
-import { useEffect } from "react";
-import { Pomodoro } from "../shared/components/pomodoro/Pomodoro";
-
-import dynamic from "next/dynamic";
-import withAuth from "../shared/components/with-auth/WithAuth";
-
-const DynamicComponent = dynamic(
-  () => import("../shared/components/task/TaskList"),
-  { ssr: false }
-);
+import { useEffect, useState } from "react";
+import { IOng, ongService } from "../shared/service/api/ong/Ong";
 
 const Home: NextPage = () => {
+  const [ongs, setOngs] = useState<IOng[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    document.title = "PomoTask";
+    ongService.getAllOngs().then((ongs) => {
+      if (ongs) {
+        setOngs(ongs);
+      }
+      setLoading(false);
+    });
   }, []);
 
   return (
     <HStack>
-      <DynamicComponent />
+      {ongs.map((ong) => (
+        <div key={ong.id}>{ong.nome}</div>
+      ))}
     </HStack>
   );
 };
 
-export default withAuth(Home);
+export default Home;
