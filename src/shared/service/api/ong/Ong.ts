@@ -21,8 +21,28 @@ const getAllOngs = async (): Promise<IOng[] | undefined> => {
     }
   }
 
+const createOng = async (nome: string, descricao: string): Promise<boolean> => {
+  try {
+      const ongToCreate = {nome, descricao}
+
+      const data = await Api.post<string>('/ongs', ongToCreate);
+
+      if(data.status === 201){
+        return true
+      }else{
+        return false
+      }
+      
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+  }
+
+
   
   
 export const ongService = {
     getAllOngs,
+    createOng
 }

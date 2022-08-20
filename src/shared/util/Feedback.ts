@@ -2,7 +2,7 @@ import { createStandaloneToast } from "@chakra-ui/react"
 
 export const Feedback = (title:string, status:"info" | "warning" | "success" | "error", description?:string):void => {
 
-    const toast = createStandaloneToast();
+    const {toast} = createStandaloneToast();
 
     toast({
       title: title,

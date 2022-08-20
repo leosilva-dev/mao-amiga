@@ -9,16 +9,20 @@ import {
   Button,
   Heading,
   useColorMode,
+  Textarea,
 } from "@chakra-ui/react";
 import { useSignUpEmailPassword } from "@nhost/react";
 
 import { Feedback } from "../shared/util/Feedback";
 import { useRouter } from "next/router";
+import { ongService } from "../shared/service/api/ong/Ong";
+import VerifyEmail from "../shared/components/verify-email/VerifyEmail";
 
 const Cadastrar: React.FC = () => {
   const { colorMode } = useColorMode();
 
   const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -34,16 +38,20 @@ const Cadastrar: React.FC = () => {
   } = useSignUpEmailPassword();
 
   const valide = () => {
-    if (password.length < 3) {
-      Feedback("A senha precisa conter pelo menos três caracteres", "error");
+    if (!name.length) {
+      Feedback("O campo nome é obrigatório", "error");
+      return false;
+    }
+    if (!description.length) {
+      Feedback("O campo descrição é obrigatório", "error");
       return false;
     }
     if (!email.includes("@")) {
       Feedback("Informe um e-mail válido", "error");
       return false;
     }
-    if (!name.length) {
-      Feedback("O campo nome é obrigatório", "error");
+    if (password.length < 8) {
+      Feedback("A senha precisa conter pelo menos oito caracteres", "error");
       return false;
     }
     Feedback("Criando sua conta...", "info");
@@ -51,9 +59,22 @@ const Cadastrar: React.FC = () => {
   };
 
   const handleSignUp = async () => {
-    await signUpEmailPassword(email, password, {
-      displayName: name,
-    });
+    const ongIsValid = valide();
+
+    if (ongIsValid) {
+      const ongCreatedWithSuccess = await ongService.createOng(
+        name,
+        description
+      );
+
+      if (ongCreatedWithSuccess) {
+        await signUpEmailPassword(email, password, {
+          displayName: name,
+        });
+      } else {
+        Feedback("Ocorreu um erro ao criar sua conta", "error");
+      }
+    }
   };
 
   if (isSuccess) {
@@ -64,10 +85,7 @@ const Cadastrar: React.FC = () => {
   return (
     <>
       {needsEmailVerification ? (
-        <p>
-          Please check your mailbox and follow the verification link to verify
-          your email.
-        </p>
+        <VerifyEmail />
       ) : (
         <>
           <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
@@ -79,12 +97,21 @@ const Cadastrar: React.FC = () => {
             >
               <Stack spacing={4}>
                 <FormControl id="name">
-                  <FormLabel>Nome</FormLabel>
+                  <FormLabel>Nome da ONG</FormLabel>
                   <Input
                     width={400}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     type="text"
+                  />
+                </FormControl>
+
+                <FormControl id="description">
+                  <FormLabel>Descrição</FormLabel>
+                  <Textarea
+                    width={400}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                   />
                 </FormControl>
 
