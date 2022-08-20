@@ -7,7 +7,7 @@ const Profile: React.FC = () => {
   const { signOut } = useSignOut();
 
   useEffect(() => {
-    document.title = "PomoTask | Profile";
+    document.title = "Mão amiga | Perfil";
   }, []);
 
   return (

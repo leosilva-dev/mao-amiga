@@ -1,13 +1,5 @@
 import type { NextPage } from "next";
-import {
-  Heading,
-  HStack,
-  Skeleton,
-  Stack,
-  Highlight,
-  VStack,
-  Box,
-} from "@chakra-ui/react";
+import { Heading, Highlight, Box, Progress } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
 import { IOng, ongService } from "../shared/service/api/ong/Ong";
@@ -28,13 +20,7 @@ const Home: NextPage = () => {
 
   return (
     <Box marginBottom={5} width="full" height="full">
-      {isLoading && (
-        <Stack>
-          <Skeleton height="20px" />
-          <Skeleton height="20px" />
-          <Skeleton height="20px" />
-        </Stack>
-      )}
+      {isLoading && <Progress isIndeterminate size="xs" color="green.300" />}
       {!isLoading && (
         <Heading lineHeight="tall">
           <Highlight

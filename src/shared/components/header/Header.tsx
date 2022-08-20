@@ -7,15 +7,23 @@ import {
   Icon,
   Button,
   Text,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuGroup,
+  MenuItem,
+  MenuList,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { BiDonateHeart } from "react-icons/bi";
-import { useAuthenticationStatus, useUserData } from "@nhost/react";
+import { useAuthenticationStatus, useSignOut, useUserData } from "@nhost/react";
 import { ToggleMode } from "../toggleMode/ToggleMode";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 export const Header = () => {
   const { isAuthenticated } = useAuthenticationStatus();
+  const { signOut } = useSignOut();
   const user = useUserData();
   const router = useRouter();
 
@@ -40,14 +48,24 @@ export const Header = () => {
         </HStack>
         <Flex alignItems={"center"}>
           {isAuthenticated && (
-            <Button
-              bg={"transparent"}
-              color={"blue.400"}
-              variant={"unstyled"}
-              onClick={() => router.push("/profile")}
-            >
-              {user?.displayName}
-            </Button>
+            <Menu>
+              <MenuButton
+                as={Button}
+                colorScheme={"blue"}
+                rightIcon={<ChevronDownIcon />}
+              >
+                {user?.displayName}
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => router.push("/profile")}>
+                  Minha conta
+                </MenuItem>
+                <MenuDivider />
+                <MenuGroup>
+                  <MenuItem onClick={signOut}>Sair</MenuItem>
+                </MenuGroup>
+              </MenuList>
+            </Menu>
           )}
           {!isAuthenticated && (
             <HStack>

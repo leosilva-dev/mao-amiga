@@ -12,7 +12,19 @@ export const OngCard: React.FC<IOngCardProps> = ({ id, nome, descricao }) => {
   const router = useRouter();
 
   return (
-    <Box p="4" boxShadow="xl" m="4" borderRadius="md" width={"full"}>
+    <Box
+      p="4"
+      m="4"
+      width={"full"}
+      boxShadow="xl"
+      cursor="pointer"
+      borderRadius="md"
+      _hover={{
+        boxShadow: "2xl",
+        transition: "all 0.5s ease-out",
+      }}
+      onClick={() => router.push(`/ong/${id}`)}
+    >
       <Box alignItems="center" marginBottom={2}>
         <Text fontWeight="bold" fontSize={"2xl"}>
           {nome}
@@ -24,9 +36,9 @@ export const OngCard: React.FC<IOngCardProps> = ({ id, nome, descricao }) => {
           {descricao}
         </Text>
       </Box>
-      <Box>
+      <Box display={"flex"} justifyContent="end">
         <Button
-          variant="solid"
+          size={"sm"}
           color="white"
           bg={"green.400"}
           _hover={{
