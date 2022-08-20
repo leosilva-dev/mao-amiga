@@ -18,39 +18,23 @@ import { useRouter } from "next/router";
 const Entrar: React.FC = () => {
   const { colorMode } = useColorMode();
 
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const router = useRouter();
-  const {
-    signInEmailPassword,
-    isLoading,
-    isSuccess,
-    needsEmailVerification,
-    isError,
-    error,
-  } = useSignInEmailPassword();
-
-  const valide = () => {
-    if (password.length < 3) {
-      Feedback("A senha precisa conter pelo menos três caracteres", "error");
-      return false;
-    }
-    if (!email.includes("@")) {
-      Feedback("Informe um e-mail válido", "error");
-      return false;
-    }
-    if (!name.length) {
-      Feedback("O campo nome é obrigatório", "error");
-      return false;
-    }
-    Feedback("Criando sua conta...", "info");
-    return true;
-  };
+  const { signInEmailPassword, isSuccess, needsEmailVerification, isError } =
+    useSignInEmailPassword();
 
   const handleSignIn = async () => {
-    await signInEmailPassword(email, password);
+    Feedback("Acessando sua conta...", "info");
+    const response = await signInEmailPassword(email, password);
+
+    if (isError) {
+      Feedback(
+        response.error?.message || "Ocorreu um erro ao acessar a sua conta...",
+        "error"
+      );
+    }
   };
 
   if (isSuccess) {
