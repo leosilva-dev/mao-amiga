@@ -1,11 +1,17 @@
 import { Api } from "../../axios-config/AxiosConfig";
+import { v4 as uuidv4 } from 'uuid';
 
 export interface IOng{
     id: number;
     nome: string;
     descricao: string;
+    nhost_id: string;
     updated_at: string;
     created_at: string;
+}
+
+const generateNhostId = ():string => {
+  return uuidv4()
 }
 
 
@@ -21,9 +27,9 @@ const getAllOngs = async (): Promise<IOng[] | undefined> => {
     }
   }
 
-const createOng = async (nome: string, descricao: string): Promise<boolean> => {
+const createOng = async (nome: string, descricao: string, nhost_id:string): Promise<boolean> => {
   try {
-      const ongToCreate = {nome, descricao}
+      const ongToCreate = {nome, descricao, nhost_id}
 
       const data = await Api.post<string>('/ongs', ongToCreate);
 
@@ -43,6 +49,7 @@ const createOng = async (nome: string, descricao: string): Promise<boolean> => {
   
   
 export const ongService = {
+  generateNhostId,
     getAllOngs,
     createOng
 }

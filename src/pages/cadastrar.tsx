@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Flex,
   Box,
@@ -60,17 +60,23 @@ const Cadastrar: React.FC = () => {
 
   const handleSignUp = async () => {
     const ongIsValid = valide();
+    const nhost_id = ongService.generateNhostId();
 
     if (ongIsValid) {
       const ongCreatedWithSuccess = await ongService.createOng(
         name,
-        description
+        description,
+        nhost_id
       );
 
       if (ongCreatedWithSuccess) {
-        await signUpEmailPassword(email, password, {
+        const response = await signUpEmailPassword(email, password, {
           displayName: name,
+          metadata: {
+            nhost_id: nhost_id,
+          },
         });
+        console.log(response);
       } else {
         Feedback("Ocorreu um erro ao criar sua conta", "error");
       }
