@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  Flex,
   Box,
   FormControl,
   FormLabel,
   Input,
   Stack,
   Button,
-  Heading,
   useColorMode,
   Textarea,
 } from "@chakra-ui/react";
@@ -28,14 +26,8 @@ const Cadastrar: React.FC = () => {
 
   const router = useRouter();
 
-  const {
-    signUpEmailPassword,
-    isLoading,
-    isSuccess,
-    needsEmailVerification,
-    isError,
-    error,
-  } = useSignUpEmailPassword();
+  const { signUpEmailPassword, isSuccess, needsEmailVerification } =
+    useSignUpEmailPassword();
 
   const valide = () => {
     if (!name.length) {

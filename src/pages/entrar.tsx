@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import {
-  Flex,
   Box,
   FormControl,
   FormLabel,
   Input,
   Stack,
   Button,
-  Heading,
   useColorMode,
 } from "@chakra-ui/react";
 import { useSignInEmailPassword } from "@nhost/react";
 
 import { Feedback } from "../shared/util/Feedback";
 import { useRouter } from "next/router";
+import VerifyEmail from "../shared/components/verify-email/VerifyEmail";
 
 const Entrar: React.FC = () => {
   const { colorMode } = useColorMode();
@@ -28,8 +27,7 @@ const Entrar: React.FC = () => {
   const handleSignIn = async () => {
     Feedback("Acessando sua conta...", "info");
     const response = await signInEmailPassword(email, password);
-
-    if (isError) {
+    if (!response.isSuccess) {
       Feedback(
         response.error?.message || "Ocorreu um erro ao acessar a sua conta...",
         "error"
@@ -45,10 +43,7 @@ const Entrar: React.FC = () => {
   return (
     <>
       {needsEmailVerification ? (
-        <p>
-          Please check your mailbox and follow the verification link to verify
-          your email.
-        </p>
+        <VerifyEmail />
       ) : (
         <>
           <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
