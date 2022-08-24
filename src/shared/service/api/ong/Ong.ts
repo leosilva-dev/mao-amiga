@@ -3,8 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 export interface IOng{
     id: number;
-    nome: string;
-    descricao: string;
+    name: string;
+    description: string;
     nhost_id: string;
     updated_at: string;
     created_at: string;
@@ -14,11 +14,9 @@ const generateNhostId = ():string => {
   return uuidv4()
 }
 
-
 const getAllOngs = async (): Promise<IOng[] | undefined> => {
   try {
       const { data } = await Api.get<IOng[]>('/ongs');
-
       return data;
   
     } catch (error) {
@@ -45,11 +43,20 @@ const createOng = async (nome: string, descricao: string, nhost_id:string): Prom
     }
   }
 
-
+const getOngByNhostId = async (nhost_id: string): Promise<IOng | undefined> => {
+  try {
+    const {data} = await Api.get<IOng[]>(`/ongs/nhost/${nhost_id}`)
+    return data[0]
+  } catch (error) {
+    console.error(error)
+    return undefined
+  }
+}
   
   
 export const ongService = {
+  createOng,
+  getAllOngs,
   generateNhostId,
-    getAllOngs,
-    createOng
+  getOngByNhostId,
 }

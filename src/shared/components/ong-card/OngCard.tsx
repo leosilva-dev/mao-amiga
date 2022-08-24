@@ -3,12 +3,16 @@ import { Button, Text, Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 interface IOngCardProps {
-  id: number;
+  nhost_id: string;
   nome: string;
   descricao: string;
 }
 
-export const OngCard: React.FC<IOngCardProps> = ({ id, nome, descricao }) => {
+export const OngCard: React.FC<IOngCardProps> = ({
+  nhost_id,
+  nome,
+  descricao,
+}) => {
   const router = useRouter();
 
   return (
@@ -23,7 +27,7 @@ export const OngCard: React.FC<IOngCardProps> = ({ id, nome, descricao }) => {
         boxShadow: "2xl",
         transition: "all 0.5s ease-out",
       }}
-      onClick={() => router.push(`/ong/${id}`)}
+      onClick={() => router.push(`/ong/${nhost_id}`)}
     >
       <Box alignItems="center" marginBottom={2}>
         <Text fontWeight="bold" fontSize={"2xl"}>
@@ -44,7 +48,7 @@ export const OngCard: React.FC<IOngCardProps> = ({ id, nome, descricao }) => {
           _hover={{
             bg: "green.500",
           }}
-          onClick={() => router.push(`/ong/${id}`)}
+          onClick={() => router.push(`/ong/${nhost_id}`)}
         >
           Conhecer ONG
         </Button>

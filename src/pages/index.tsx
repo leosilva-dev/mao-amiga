@@ -35,9 +35,9 @@ const Home: NextPage = () => {
       {ongs.map((ong) => (
         <OngCard
           key={ong.id}
-          id={ong.id}
-          nome={ong.nome}
-          descricao={ong.descricao}
+          nhost_id={ong.nhost_id}
+          nome={ong.name}
+          descricao={ong.description}
         />
       ))}
     </Box>
