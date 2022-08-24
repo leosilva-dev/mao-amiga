@@ -1,0 +1,55 @@
+import React from "react";
+import { Button, Text, Box } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+
+interface IPublicacaoCardProps {
+  title: string;
+  description: string;
+}
+
+export const PublicacaoCard: React.FC<IPublicacaoCardProps> = ({
+  title,
+  description,
+}) => {
+  const router = useRouter();
+
+  return (
+    <Box
+      p="4"
+      m="4"
+      width={"full"}
+      boxShadow="xl"
+      cursor="pointer"
+      borderRadius="md"
+      _hover={{
+        boxShadow: "2xl",
+        transition: "all 0.5s ease-out",
+      }}
+    >
+      <Box alignItems="center" marginBottom={2}>
+        <Text fontWeight="bold" fontSize={"2xl"}>
+          {title}
+        </Text>
+      </Box>
+
+      <Box marginBottom={5}>
+        <Text fontSize={"lg"} textAlign={"left"} maxW={"6xl"}>
+          {description}
+        </Text>
+      </Box>
+      <Box display={"flex"} justifyContent="end">
+        <Button
+          size={"sm"}
+          color="white"
+          bg={"green.400"}
+          _hover={{
+            bg: "green.500",
+          }}
+          onClick={() => router.push(`/`)}
+        >
+          Quero ajudar
+        </Button>
+      </Box>
+    </Box>
+  );
+};

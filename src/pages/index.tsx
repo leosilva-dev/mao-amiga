@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { Heading, Highlight, Box, Progress } from "@chakra-ui/react";
+import { Heading, Highlight, Box, Progress, Text } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
 import { IOng, ongService } from "../shared/service/api/ong/Ong";
@@ -20,7 +20,12 @@ const Home: NextPage = () => {
 
   return (
     <Box marginBottom={5} width="full" height="full">
-      {isLoading && <Progress isIndeterminate size="xs" color="green.300" />}
+      {isLoading && (
+        <Box width="full" height="full">
+          <Progress isIndeterminate size="xs" color="green.300" />
+          <Text fontSize={"md"}>Carregando...</Text>
+        </Box>
+      )}
       {!isLoading && (
         <Heading lineHeight="tall">
           <Highlight
