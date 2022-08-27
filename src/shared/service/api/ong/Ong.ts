@@ -25,6 +25,16 @@ const getAllOngs = async (): Promise<IOng[] | undefined> => {
     }
   }
 
+const getOngByNhostId = async (nhost_id: string): Promise<IOng | undefined> => {
+    try {
+      const {data} = await Api.get<IOng[]>(`/ongs/nhost/${nhost_id}`)
+      return data[0]
+    } catch (error) {
+      console.error(error)
+      return undefined
+    }
+  }
+
 const createOng = async (nome: string, descricao: string, nhost_id:string): Promise<boolean> => {
   try {
       const ongToCreate = {nome, descricao, nhost_id}
@@ -43,20 +53,31 @@ const createOng = async (nome: string, descricao: string, nhost_id:string): Prom
     }
   }
 
-const getOngByNhostId = async (nhost_id: string): Promise<IOng | undefined> => {
-  try {
-    const {data} = await Api.get<IOng[]>(`/ongs/nhost/${nhost_id}`)
-    return data[0]
-  } catch (error) {
-    console.error(error)
-    return undefined
-  }
-}
+const updateOngById = async (id:number, name: string, description: string): Promise<boolean> => {
+    try {
+        const ongToUpdate = {name, description}
+  
+        const data = await Api.put<string>(`/ongs/${id}`, ongToUpdate);
+  
+        if(data.status === 200){
+          return true
+        }else{
+          return false
+        }
+        
+      } catch (error) {
+          console.log(error);
+          return false;
+      }
+    }
+
+
   
   
 export const ongService = {
   createOng,
   getAllOngs,
+  updateOngById,
   generateNhostId,
   getOngByNhostId,
 }
