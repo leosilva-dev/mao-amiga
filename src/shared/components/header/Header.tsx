@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
@@ -20,12 +20,25 @@ import { BiDonateHeart } from "react-icons/bi";
 import { useAuthenticationStatus, useSignOut, useUserData } from "@nhost/react";
 import { ToggleMode } from "../toggleMode/ToggleMode";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import { IOng, ongService } from "../../service/api/ong/Ong";
 
 export const Header = () => {
   const { isAuthenticated } = useAuthenticationStatus();
   const { signOut } = useSignOut();
   const user = useUserData();
   const router = useRouter();
+
+  const [ong, setOng] = useState<IOng>();
+
+  useEffect(() => {
+    ongService
+      .getOngByNhostId(user?.metadata.nhost_id as string)
+      .then((response) => {
+        if (response) {
+          setOng(response);
+        }
+      });
+  }, [user]);
 
   return (
     <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -54,7 +67,7 @@ export const Header = () => {
                 colorScheme={"blue"}
                 rightIcon={<ChevronDownIcon />}
               >
-                {user?.displayName}
+                {ong?.name}
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => router.push("/profile")}>
