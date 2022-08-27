@@ -10,12 +10,10 @@ import {
   Text,
   Textarea,
   useColorMode,
-  VStack,
 } from "@chakra-ui/react";
-import { useSignOut, useUserData } from "@nhost/react";
+import { useUserData } from "@nhost/react";
 import withAuth from "../shared/components/with-auth/WithAuth";
 import { IOng, ongService } from "../shared/service/api/ong/Ong";
-import router from "next/router";
 import { Feedback } from "../shared/util/Feedback";
 
 const Profile: React.FC = () => {
@@ -29,7 +27,6 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     document.title = "Mão amiga | Perfil";
-    console.log(user);
   }, []);
 
   useEffect(() => {
