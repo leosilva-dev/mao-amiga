@@ -20,7 +20,7 @@ const Home: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    ongService.getOngByNhostId(id as string).then((response) => {
+    ongService.getByNhostId(id as string).then((response) => {
       if (response) {
         setOng(response);
       }
@@ -29,7 +29,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (ong?.id === undefined) return;
-    publicacaoService.getPublicacoesByOngId(ong.id).then((response) => {
+    publicacaoService.getByOngId(ong.id).then((response) => {
       if (response) {
         setPublicacoes(response);
       }

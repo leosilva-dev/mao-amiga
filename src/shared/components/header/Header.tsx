@@ -32,7 +32,7 @@ export const Header = () => {
 
   useEffect(() => {
     ongService
-      .getOngByNhostId(user?.metadata.nhost_id as string)
+      .getByNhostId(user?.metadata.nhost_id as string)
       .then((response) => {
         if (response) {
           setOng(response);

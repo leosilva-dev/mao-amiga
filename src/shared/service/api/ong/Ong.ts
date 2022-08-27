@@ -14,7 +14,7 @@ const generateNhostId = ():string => {
   return uuidv4()
 }
 
-const getAllOngs = async (): Promise<IOng[] | undefined> => {
+const getAll = async (): Promise<IOng[] | undefined> => {
   try {
       const { data } = await Api.get<IOng[]>('/ongs');
       return data;
@@ -25,7 +25,7 @@ const getAllOngs = async (): Promise<IOng[] | undefined> => {
     }
   }
 
-const getOngByNhostId = async (nhost_id: string): Promise<IOng | undefined> => {
+const getByNhostId = async (nhost_id: string): Promise<IOng | undefined> => {
     try {
       const {data} = await Api.get<IOng[]>(`/ongs/nhost/${nhost_id}`)
       return data[0]
@@ -35,7 +35,7 @@ const getOngByNhostId = async (nhost_id: string): Promise<IOng | undefined> => {
     }
   }
 
-const createOng = async (nome: string, descricao: string, nhost_id:string): Promise<boolean> => {
+const create = async (nome: string, descricao: string, nhost_id:string): Promise<boolean> => {
   try {
       const ongToCreate = {nome, descricao, nhost_id}
 
@@ -53,7 +53,7 @@ const createOng = async (nome: string, descricao: string, nhost_id:string): Prom
     }
   }
 
-const updateOngById = async (id:number, name: string, description: string): Promise<boolean> => {
+const updateById = async (id:number, name: string, description: string): Promise<boolean> => {
     try {
         const ongToUpdate = {name, description}
   
@@ -75,9 +75,9 @@ const updateOngById = async (id:number, name: string, description: string): Prom
   
   
 export const ongService = {
-  createOng,
-  getAllOngs,
-  updateOngById,
+  create,
+  getAll,
+  updateById,
+  getByNhostId,
   generateNhostId,
-  getOngByNhostId,
 }
