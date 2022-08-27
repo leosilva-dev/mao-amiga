@@ -10,7 +10,18 @@ export interface IPublicacao{
   updated_at:string;
 }
 
-const getPublicacoesByOngId = async (id: number): Promise<IPublicacao[] | undefined> => {
+const getAll = async (): Promise<IPublicacao[] | undefined> => {
+  try {
+      const { data } = await Api.get<IPublicacao[]>('/publicacoes');
+      return data;
+  
+    } catch (error) {
+        console.log(error);
+        return undefined;
+    }
+  }
+
+const getByOngId = async (id: number): Promise<IPublicacao[] | undefined> => {
     try {
       const {data} = await Api.get<IPublicacao[]>(`/ongs/${id}/publicacoes`)
       return data
@@ -21,5 +32,6 @@ const getPublicacoesByOngId = async (id: number): Promise<IPublicacao[] | undefi
   }
 
 export const publicacaoService = {
-    getPublicacoesByOngId
+  getAll,
+  getByOngId
 }

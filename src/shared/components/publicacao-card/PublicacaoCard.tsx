@@ -4,11 +4,13 @@ import { useRouter } from "next/router";
 
 interface IPublicacaoCardProps {
   title: string;
+  ongName: string;
   description: string;
 }
 
 export const PublicacaoCard: React.FC<IPublicacaoCardProps> = ({
   title,
+  ongName,
   description,
 }) => {
   const router = useRouter();
@@ -27,6 +29,9 @@ export const PublicacaoCard: React.FC<IPublicacaoCardProps> = ({
       }}
     >
       <Box alignItems="center" marginBottom={2}>
+        <Text fontWeight="bold" fontSize={"md"}>
+          {ongName}
+        </Text>
         <Text fontWeight="bold" fontSize={"2xl"}>
           {title}
         </Text>

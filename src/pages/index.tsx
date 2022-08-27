@@ -2,17 +2,21 @@ import type { NextPage } from "next";
 import { Heading, Highlight, Box, Progress, Text } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
-import { IOng, ongService } from "../shared/service/api/ong/Ong";
-import { OngCard } from "../shared/components/ong-card/OngCard";
+import {
+  IPublicacao,
+  publicacaoService,
+} from "../shared/service/api/publicacao/Publicacao";
+import { PublicacaoCard } from "../shared/components/publicacao-card/PublicacaoCard";
+import { stringify } from "querystring";
 
 const Home: NextPage = () => {
-  const [ongs, setOngs] = useState<IOng[]>([]);
+  const [publicacoes, setPublicacoes] = useState<IPublicacao[]>();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    ongService.getAllOngs().then((ongs) => {
-      if (ongs) {
-        setOngs(ongs);
+    publicacaoService.getAll().then((response) => {
+      if (response) {
+        setPublicacoes(response);
       }
       setIsLoading(false);
     });
@@ -37,14 +41,15 @@ const Home: NextPage = () => {
         </Heading>
       )}
 
-      {ongs.map((ong) => (
-        <OngCard
-          key={ong.id}
-          nhost_id={ong.nhost_id}
-          nome={ong.name}
-          descricao={ong.description}
-        />
-      ))}
+      {publicacoes &&
+        publicacoes.map((publicacao) => (
+          <PublicacaoCard
+            key={publicacao.id}
+            ongName={String(publicacao.ong_id)}
+            title={publicacao.title}
+            description={publicacao.description}
+          />
+        ))}
     </Box>
   );
 };
