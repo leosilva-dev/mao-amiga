@@ -45,8 +45,10 @@ const Home: NextPage = () => {
         publicacoes.map((publicacao) => (
           <PublicacaoCard
             key={publicacao.id}
-            ongName={String(publicacao.ong_id)}
             title={publicacao.title}
+            nhost_id={String(publicacao.ong_id)}
+            ongName={String(publicacao.ong_id)}
+            created_at={publicacao.created_at}
             description={publicacao.description}
           />
         ))}

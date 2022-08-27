@@ -1,16 +1,22 @@
 import React from "react";
 import { Button, Text, Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import moment from "moment";
+import "moment/locale/pt-br";
 
 interface IPublicacaoCardProps {
   title: string;
   ongName: string;
+  nhost_id: string;
+  created_at: string;
   description: string;
 }
 
 export const PublicacaoCard: React.FC<IPublicacaoCardProps> = ({
   title,
   ongName,
+  nhost_id,
+  created_at,
   description,
 }) => {
   const router = useRouter();
@@ -29,9 +35,19 @@ export const PublicacaoCard: React.FC<IPublicacaoCardProps> = ({
       }}
     >
       <Box alignItems="center" marginBottom={2}>
-        <Text fontWeight="bold" fontSize={"md"}>
+        <Text
+          fontSize={"md"}
+          fontWeight="bold"
+          color="blue.400"
+          _hover={{
+            color: "blue.600",
+            transition: "all 0.5s ease-out",
+          }}
+          onClick={() => router.push(`/ong/${nhost_id}`)}
+        >
           {ongName}
         </Text>
+        <Text fontSize={"sm"}>{moment(created_at).fromNow()}</Text>
         <Text fontWeight="bold" fontSize={"2xl"}>
           {title}
         </Text>
