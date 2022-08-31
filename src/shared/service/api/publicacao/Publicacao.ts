@@ -1,4 +1,5 @@
 import { Api } from "../../axios-config/AxiosConfig"
+import { IOng } from "../ong/Ong";
 
 export interface IPublicacao{
   id:number;
@@ -8,6 +9,7 @@ export interface IPublicacao{
   active:number;
   created_at:string;
   updated_at:string;
+  ong: IOng;
 }
 
 const getAll = async (): Promise<IPublicacao[] | undefined> => {
