@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Text, Box } from "@chakra-ui/react";
+import { Button, Text, Box, Divider } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import moment from "moment";
 import "moment/locale/pt-br";
@@ -27,7 +27,6 @@ export const PublicacaoCard: React.FC<IPublicacaoCardProps> = ({
       m="4"
       width={"full"}
       boxShadow="xl"
-      cursor="pointer"
       borderRadius="md"
       _hover={{
         boxShadow: "2xl",
@@ -39,6 +38,7 @@ export const PublicacaoCard: React.FC<IPublicacaoCardProps> = ({
           fontSize={"md"}
           fontWeight="bold"
           color="blue.400"
+          cursor={"pointer"}
           _hover={{
             color: "blue.600",
             transition: "all 0.5s ease-out",
@@ -58,7 +58,8 @@ export const PublicacaoCard: React.FC<IPublicacaoCardProps> = ({
           {description}
         </Text>
       </Box>
-      <Box display={"flex"} justifyContent="end">
+      <Divider />
+      <Box marginTop={2} display={"flex"} justifyContent="end">
         <Button
           size={"sm"}
           color="white"

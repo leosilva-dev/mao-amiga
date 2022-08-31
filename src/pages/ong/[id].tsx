@@ -50,19 +50,28 @@ const Home: NextPage = () => {
           <Text fontSize={"5xl"}>{ong.name}</Text>
           <Text fontSize={"xl"}>{ong.description}</Text>
 
+          <Text marginTop={5} fontSize={"2xl"}>
+            Publicações da ong:
+          </Text>
+
           {publicacoes === undefined && (
             <Text fontSize={"xl"}>
               Esta ong ainda não publicou nenhuma necessidade...
             </Text>
           )}
 
-          {publicacoes?.map((publicacao) => (
-            <PublicacaoCard
-              key={publicacao.id}
-              title={publicacao.title}
-              description={publicacao.description}
-            />
-          ))}
+          {publicacoes &&
+            ong &&
+            publicacoes?.map((publicacao) => (
+              <PublicacaoCard
+                key={publicacao.id}
+                title={publicacao.title}
+                description={publicacao.description}
+                created_at={publicacao.created_at}
+                nhost_id={ong.nhost_id}
+                ongName={ong.name}
+              />
+            ))}
         </>
       )}
     </Box>

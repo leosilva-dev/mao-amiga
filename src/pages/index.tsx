@@ -46,8 +46,8 @@ const Home: NextPage = () => {
           <PublicacaoCard
             key={publicacao.id}
             title={publicacao.title}
-            nhost_id={String(publicacao.ong_id)}
-            ongName={String(publicacao.ong_id)}
+            nhost_id={String(publicacao.ong.nhost_id)}
+            ongName={String(publicacao.ong.name)}
             created_at={publicacao.created_at}
             description={publicacao.description}
           />
