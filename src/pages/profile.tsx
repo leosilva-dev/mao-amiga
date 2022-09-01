@@ -31,7 +31,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     ongService
-      .getOngByNhostId(user?.metadata.nhost_id as string)
+      .getByNhostId(user?.metadata.nhost_id as string)
       .then((response) => {
         if (response) {
           setOng(response);
@@ -46,7 +46,7 @@ const Profile: React.FC = () => {
     description: string
   ) => {
     setIsSavingChanges(true);
-    const updatedSuccessfully = await ongService.updateOngById(
+    const updatedSuccessfully = await ongService.updateById(
       id,
       name,
       description

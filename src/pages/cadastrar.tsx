@@ -55,7 +55,7 @@ const Cadastrar: React.FC = () => {
     const nhost_id = ongService.generateNhostId();
 
     if (ongIsValid) {
-      const ongCreatedWithSuccess = await ongService.createOng(
+      const ongCreatedWithSuccess = await ongService.create(
         name,
         description,
         nhost_id
