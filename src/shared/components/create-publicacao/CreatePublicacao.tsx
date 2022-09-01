@@ -18,7 +18,6 @@ import {
 import { AddIcon } from "@chakra-ui/icons";
 import { Feedback } from "../../util/Feedback";
 import { publicacaoService } from "../../service/api/publicacao/Publicacao";
-import { useRouter } from "next/router";
 
 interface ICreatePublicacaoProps {
   ongId: number;
@@ -32,7 +31,6 @@ export const CreatePublicacao: React.FC<ICreatePublicacaoProps> = ({
   setRender,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
