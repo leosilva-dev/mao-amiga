@@ -33,7 +33,37 @@ const getByOngId = async (id: number): Promise<IPublicacao[] | undefined> => {
     }
   }
 
+const create = async (ongId:number, title:string, description:string): Promise<boolean> => {
+  try {
+    const data = await Api.post(`/publicacoes?ong_id=${ongId}&description=${description}&title=${title}&active=1`)
+    if(data.status === 201){
+      return true
+    }else{
+      return false
+    }
+  } catch (error) {
+    console.error(error)
+    return false
+  }
+}
+
+const deleteById = async (publicacaoId:number): Promise<boolean> => {
+  try {
+    const data = await Api.delete(`/publicacoes/${publicacaoId}`)
+    if(data.status === 202){
+      return true
+    }else{
+      return false
+    }
+  } catch (error) {
+    console.error(error)
+    return false
+  }
+}
+
 export const publicacaoService = {
   getAll,
-  getByOngId
+  create,
+  getByOngId,
+  deleteById
 }
