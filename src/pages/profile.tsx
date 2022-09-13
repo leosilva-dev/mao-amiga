@@ -30,14 +30,16 @@ const Profile: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    ongService
-      .getByNhostId(user?.metadata.nhost_id as string)
-      .then((response) => {
-        if (response) {
-          setOng(response);
-        }
-        setIsLoading(false);
-      });
+    if (user?.metadata.nhost_id !== undefined) {
+      ongService
+        .getByNhostId(user.metadata.nhost_id as string)
+        .then((response) => {
+          if (response) {
+            setOng(response);
+          }
+          setIsLoading(false);
+        });
+    }
   }, [user]);
 
   const handleUpdateOng = async (

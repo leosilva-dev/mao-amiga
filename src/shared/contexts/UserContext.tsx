@@ -1,6 +1,5 @@
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React, { createContext } from "react";
 import { useUserData } from "@nhost/react";
-import { Feedback } from "../util/Feedback";
 
 interface IUserContextData {
   user: any;

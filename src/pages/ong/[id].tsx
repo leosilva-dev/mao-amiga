@@ -10,14 +10,31 @@ import {
   publicacaoService,
 } from "../../shared/service/api/publicacao/Publicacao";
 import { PublicacaoCard } from "../../shared/components/publicacao-card/PublicacaoCard";
+import { useUserData } from "@nhost/react";
 
 const Home: NextPage = () => {
   const router = useRouter();
+  const user = useUserData();
   const { id } = router.query;
 
+  const [render, setRender] = useState(false);
   const [ong, setOng] = useState<IOng>();
   const [publicacoes, setPublicacoes] = useState<IPublicacao[]>();
   const [isLoading, setIsLoading] = useState(true);
+  const [ongLogada, setOngLogada] = useState<IOng>();
+
+  useEffect(() => {
+    if (user?.metadata.nhost_id !== undefined) {
+      ongService
+        .getByNhostId(user.metadata.nhost_id as string)
+        .then((response) => {
+          if (response) {
+            setOngLogada(response);
+            console.log(response);
+          }
+        });
+    }
+  }, [user]);
 
   useEffect(() => {
     ongService.getByNhostId(id as string).then((response) => {
@@ -32,6 +49,7 @@ const Home: NextPage = () => {
     publicacaoService.getByOngId(ong.id).then((response) => {
       if (response) {
         setPublicacoes(response);
+        console.log(response);
       }
       setIsLoading(false);
     });
@@ -65,11 +83,16 @@ const Home: NextPage = () => {
             publicacoes?.map((publicacao) => (
               <PublicacaoCard
                 key={publicacao.id}
+                ongLogadaId={ongLogada?.id}
+                ongPublicacaoId={publicacao.ong_id}
+                publicacaoId={publicacao.id}
                 title={publicacao.title}
-                description={publicacao.description}
+                nhost_id={String(ongLogada?.nhost_id)}
+                ongName={String(ong?.name)}
                 created_at={publicacao.created_at}
-                nhost_id={ong.nhost_id}
-                ongName={ong.name}
+                description={publicacao.description}
+                render={render}
+                setRender={setRender}
               />
             ))}
         </>

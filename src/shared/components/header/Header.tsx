@@ -31,13 +31,16 @@ export const Header = () => {
   const [ong, setOng] = useState<IOng>();
 
   useEffect(() => {
-    ongService
-      .getByNhostId(user?.metadata.nhost_id as string)
-      .then((response) => {
-        if (response) {
-          setOng(response);
-        }
-      });
+    if (user?.metadata.nhost_id !== undefined) {
+      console.log(user.metadata.nhost_id);
+      ongService
+        .getByNhostId(user.metadata.nhost_id as string)
+        .then((response) => {
+          if (response) {
+            setOng(response);
+          }
+        });
+    }
   }, [user]);
 
   return (
