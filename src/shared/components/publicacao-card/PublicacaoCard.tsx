@@ -7,6 +7,7 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { publicacaoService } from "../../service/api/publicacao/Publicacao";
 import { Feedback } from "../../util/Feedback";
 import { DeleteButton } from "../delete-button/DeleteButton";
+import { QueroAjudarButton } from "../quero-ajudar-button/QueroAjudarButton";
 
 interface IPublicacaoCardProps {
   title: string;
@@ -93,7 +94,7 @@ export const PublicacaoCard: React.FC<IPublicacaoCardProps> = ({
       </Box>
       <Divider />
       <Box marginTop={2} display={"flex"} justifyContent="end">
-        <Button
+        {/* <Button
           size={"sm"}
           color="white"
           bg={"primary"}
@@ -103,7 +104,8 @@ export const PublicacaoCard: React.FC<IPublicacaoCardProps> = ({
           onClick={() => router.push(`/`)}
         >
           Quero ajudar
-        </Button>
+        </Button> */}
+        <QueroAjudarButton ongId={ongPublicacaoId} />
       </Box>
     </Box>
   );
