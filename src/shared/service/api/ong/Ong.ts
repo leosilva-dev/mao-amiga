@@ -35,9 +35,9 @@ const getByNhostId = async (nhost_id: string): Promise<IOng | undefined> => {
     }
   }
 
-const create = async (nome: string, descricao: string, nhost_id:string): Promise<boolean> => {
+const create = async (name: string, description: string, nhost_id:string): Promise<boolean> => {
   try {
-      const ongToCreate = {nome, descricao, nhost_id}
+      const ongToCreate = {name, description, nhost_id}
 
       const data = await Api.post<string>('/ongs', ongToCreate);
 
